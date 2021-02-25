@@ -7,9 +7,9 @@ import CustomerService from '../services/customer.service';
 
 export const getCustomers = async (request: Request, response: Response): Promise<any> => {
     const customerService = CustomerService.getInstance();
-    try{
+    try {
         response.json(await customerService.getCustomers());
-    } catch(e){
+    } catch (e) {
         console.error("Error trying to get customers " + e.message);
         response.status(500);
         response.json(ErrorHandler
@@ -19,9 +19,64 @@ export const getCustomers = async (request: Request, response: Response): Promis
 
 export const createCustomer = async (request: Request, response: Response): Promise<any> => {
     const customerService = CustomerService.getInstance();
-    try{
-        response.json(await customerService.createCustomer(request));
-    } catch(e){
+    try {
+        //validates entries.
+        const name = request.body.name;
+        const email = request.body.email;
+        if (!name || !email) {
+            response.status(400);
+            response.json(
+                ErrorHandler
+                    .getInstance().buildResponseError(400
+                        , "Invalid request on payload, validate entries."));
+        }
+        let customerData = {
+            'name': request.body.name,
+            'email': request.body.email
+        };
+        await customerService.createCustomer(customerData).then(result => {
+            if (result.error_code) {
+                response.status(result.http_code);
+            } else {
+                response.status(201)
+            }
+            response.json(result);
+        });
+    } catch (e) {
+        console.error("Error trying to create the customer " + e.message);
+        response.status(500);
+        response.json(ErrorHandler
+            .getInstance().buildResponseError(500, "There was an error trying to create the customer"));
+    }
+}
+export const updateCustomer = async (request: Request, response: Response): Promise<any> => {
+    const customerService = CustomerService.getInstance();
+    try {
+        //validates entries.
+        const name = request.body.name;
+        const email = request.body.email;
+        const id = request.params.customerId;
+        if (!name || !email) {
+            response.status(400);
+            response.json(
+                ErrorHandler
+                    .getInstance().buildResponseError(400
+                        , "Invalid request on payload, validate entries."));
+        }
+        let customerData = {
+            'name': request.body.name,
+            'email': request.body.email,
+            'id': id
+        };
+        await customerService.updateCustomer(customerData).then(result => {
+            if (result.error_code) {
+                response.status(result.http_code);
+            } else {
+                response.status(204)
+            }
+            response.json(result);
+        });
+    } catch (e) {
         console.error("Error trying to create the customer " + e.message);
         response.status(500);
         response.json(ErrorHandler

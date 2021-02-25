@@ -1,26 +1,33 @@
 import express, { Application, Request, response, Response } from 'express';
 import cors from 'cors';
 import CustomerRoutes from '../routes/customer.routes';
+import { ENV, OPEN_API_KEY, MERCHANT_ID } from './settings';
 
-const ENVIRONMENT = 'dev';
 export class App {
     public app: Application;
     constructor(private readonly port?: number | string){
         this.app = express();
         this.settings();
         this.initializeRoutes();
+        this.listen();
     }
 
     public settings(){
+        if(!OPEN_API_KEY || !MERCHANT_ID){
+            console.error("OPEN_API_KEY OR MERCHANT_ID Not found, please add this values");
+            throw "API server needs more arguments to run.";
+        }
         this.app.set('port', this.port || process.env.PORT || 8000);
         this.app.use(express.json());
         this.app.use(cors());
     }
 
     public listen(){
-        return this.app.listen(this.app.get('port'), () => {
-            console.log(`Server on env: ${ENVIRONMENT} listening on port ${this.app.get('port')}`);
-        })
+        if (process.env.NODE_ENV !== 'test') {
+            return this.app.listen(this.app.get('port'), () => {
+                console.log(`Server on env: ${ENV} listening on port ${this.app.get('port')}`);
+            });
+        }
     }
 
     public getServer(){

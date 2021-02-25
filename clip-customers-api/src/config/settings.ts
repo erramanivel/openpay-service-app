@@ -1,7 +1,11 @@
 const ENVIRONMENTS = {
-    dev: 'dev',
     stage: 'stage',
     prod: 'prod'
 }
 
-export { ENVIRONMENTS };
+const ENV: string = process.env.ENV_TYPE || ENVIRONMENTS.stage;
+const OPEN_API_KEY: string = process.env.OPEN_API_KEY;
+const MERCHANT_ID: string = process.env.MERCHANT_ID;
+
+
+export { ENV, OPEN_API_KEY, MERCHANT_ID };

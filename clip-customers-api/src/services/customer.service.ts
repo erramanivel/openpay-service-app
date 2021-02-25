@@ -1,15 +1,15 @@
-import Openpay from 'openpay';
-import { Request } from 'express';
 import  Util from 'util';
+import { OPEN_API_KEY, MERCHANT_ID } from '../config/settings';
+const Openpay = require('openpay');
 
 
 class CustomerService {
     private static instance: CustomerService;
-    private openPay: Openpay;
+    private openPay;
 
     private constructor() {
-        this.openPay = new Openpay("your_id", "private_key", false);
-        console.log("openPay created" + this.openPay);
+        this.openPay = new Openpay(MERCHANT_ID, OPEN_API_KEY, false);
+        this.openPay.setTimeout(10000);
     }
 
     public static getInstance(): CustomerService {
@@ -23,25 +23,28 @@ class CustomerService {
         const customersList =Util.promisify(this.openPay.customers.list);
         let data = "";
         const result = await customersList(data)
-        .then(list => {
+        .then((list: any) => {
             return list;
-        }).catch(error => {
+        }).catch((error: any) => {
             return error;
         }); 
         return result;
     }
 
-    public async createCustomer(request: Request): Promise<any>{
-        //validates entries.
-        let data = {
-            'name': 'customer name',
-            'email': 'customer_email@me.com',
-            'requires_account': false 
-            };
+    public async createCustomer(customerData: any): Promise<any>{
         const customer= Util.promisify(this.openPay.customers.create);
-        return await customer(data).then(body => {
+        return await customer(customerData).then((body: any) => {
             return body;
-        }).catch(error => {
+        }).catch((error: any) => {
+            return error;
+        }) 
+    }
+
+    public async updateCustomer(customerData: any): Promise<any>{
+        const customer= Util.promisify(this.openPay.customers.update);
+        return await customer(customerData.id, customerData).then(( body: any) => {
+            return body;
+        }).catch((error: any) => {
             return error;
         }) 
     }
