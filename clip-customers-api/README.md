@@ -2,15 +2,23 @@
 
 This NodeJS with Typescript API contains the functionality to get,create and update customers from an OpenPay account.
 
+# Install
+
+Run command: 
+ `npm install`
+  
+# Usage
+
 Note In order to get this application working you should run this project with the following arguments:
 
-### `ENV_TYPE=stage OPEN_API_KEY={your_open_api_key} MERCHANT_ID={your_merchant_id} npm run dev`
+`
+ `ENV_TYPE=stage OPEN_API_KEY={your_open_api_key} MERCHANT_ID={your_merchant_id} npm run dev`
 
 Runs the app in the development mode with nodemon.\
 Open [http://localhost:8000](http://localhost:8000) to hit it in the browser.
 The page will reload if you make edits.\
 
-### `npm run build`
+ `npm run build`
 
 Builds the api for deployment to the `dist` folder.\
 
