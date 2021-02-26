@@ -11,7 +11,6 @@ Run command:
 
 Note In order to get this application working you should run this project with the following arguments:
 
-`
  `ENV_TYPE=stage OPEN_API_KEY={your_open_api_key} MERCHANT_ID={your_merchant_id} npm run dev`
 
 Runs the app in the development mode with nodemon.\
@@ -26,11 +25,11 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 
-### `ENV_TYPE=stage OPEN_API_KEY={your_open_api_key} MERCHANT_ID={your_merchant_id} npm run start`
+ `ENV_TYPE=stage OPEN_API_KEY={your_open_api_key} MERCHANT_ID={your_merchant_id} npm run start`
 Runs the app in the compilated mode.\
 Open [http://localhost:8000](http://localhost:8000) to hit it in the browser.
 
-### `ENV_TYPE=stage OPEN_API_KEY={your_open_api_key} MERCHANT_ID={your_merchant_id} npm run test`
+ `ENV_TYPE=stage OPEN_API_KEY={your_open_api_key} MERCHANT_ID={your_merchant_id} npm run test`
 Runs the unit test with jest.
 
 # API endpoints:
