@@ -5,11 +5,12 @@ const customerData = {
     'email' : 'myemail@myemal.com'
 };
 
+
 describe('customer Service logic', () => {
     it('should get Customers and result should contains a respone', async function () {
         const custService = CustomerService.getInstance();
         expect(custService).toBeDefined;
-        const result = await custService.getCustomers();
+        const result = await custService.getCustomers(undefined);
         expect(result).toBeDefined;
     });
 
@@ -39,7 +40,7 @@ describe('customer Service logic', () => {
     it('shold update a customer and return it', async function () {
         const custService = CustomerService.getInstance();
         expect(custService).toBeDefined;
-        const customers = await custService.getCustomers();
+        const customers = await custService.getCustomers(undefined);
         const customerDataUpdate = {
             'name' : 'mynewname',
             'email' : 'myemail@mynewemail.com',

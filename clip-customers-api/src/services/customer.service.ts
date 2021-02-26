@@ -19,9 +19,19 @@ class CustomerService {
         return CustomerService.instance;
     }
 
-    public async getCustomers(): Promise<any>{
+    public async getCustomers(params: any): Promise<any>{
+        let offset = 0;
+        let limit = 10;
+        console.log(params);
+        if(params){
+            offset = params.offset;
+            limit = params.limit;
+        }
         const customersList =Util.promisify(this.openPay.customers.list);
-        let data = "";
+        let data = {
+            offset: offset,
+            limit: limit
+        };
         const result = await customersList(data)
         .then((list: any) => {
             return list;

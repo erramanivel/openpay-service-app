@@ -8,7 +8,8 @@ import CustomerService from '../services/customer.service';
 export const getCustomers = async (request: Request, response: Response): Promise<any> => {
     const customerService = CustomerService.getInstance();
     try {
-        response.json(await customerService.getCustomers());
+        console.log(request);
+        response.json(await customerService.getCustomers(request.query));
     } catch (e) {
         console.error("Error trying to get customers " + e.message);
         response.status(500);
